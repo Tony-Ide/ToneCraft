@@ -76,28 +76,28 @@ export default function AudioEqualizer() {
     }
   }, [])
 
-    const initializeAudioContext = useCallback(() => {
+  const initializeAudioContext = useCallback(() => {
     if (!audioRef.current) return
-    
+
     // If context already exists, just return
     if (audioNodesRef.current.context) return
 
     try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-      const source = audioContext.createMediaElementSource(audioRef.current)
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+    const source = audioContext.createMediaElementSource(audioRef.current)
 
       // Create filters with better band centers
-      const bassFilter = audioContext.createBiquadFilter()
-      bassFilter.type = "lowshelf"
+    const bassFilter = audioContext.createBiquadFilter()
+    bassFilter.type = "lowshelf"
       bassFilter.frequency.value = 100  // Better bass center frequency
 
-      const midFilter = audioContext.createBiquadFilter()
-      midFilter.type = "peaking"
+    const midFilter = audioContext.createBiquadFilter()
+    midFilter.type = "peaking"
       midFilter.frequency.value = 1000  // 1kHz mid center
       midFilter.Q.value = 1.0
 
-      const trebleFilter = audioContext.createBiquadFilter()
-      trebleFilter.type = "highshelf"
+    const trebleFilter = audioContext.createBiquadFilter()
+    trebleFilter.type = "highshelf"
       trebleFilter.frequency.value = 8000  // 8kHz treble center
 
       // Add master gain for headroom
@@ -112,17 +112,17 @@ export default function AudioEqualizer() {
       comp.attack.value = 0.003
       comp.release.value = 0.25
 
-      audioNodesRef.current = {
-        source,
-        bassFilter,
-        midFilter,
-        trebleFilter,
+    audioNodesRef.current = {
+      source,
+      bassFilter,
+      midFilter,
+      trebleFilter,
         masterGain,
         comp,
-        context: audioContext,
-      }
+      context: audioContext,
+    }
 
-      connectAudioGraph()
+    connectAudioGraph()
     } catch (error) {
       console.error('Error initializing audio context:', error)
     }
@@ -258,10 +258,10 @@ export default function AudioEqualizer() {
     if (!audioRef.current) return
     
     try {
-      audioRef.current.pause()
-      audioRef.current.currentTime = 0
+    audioRef.current.pause()
+    audioRef.current.currentTime = 0
       // Force the playing state to false immediately
-      setIsPlaying(false)
+    setIsPlaying(false)
     } catch (error) {
       console.error('Stop audio error:', error)
     }
@@ -414,7 +414,7 @@ export default function AudioEqualizer() {
     return wavBlob
   }
 
-      return (
+  return (
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
@@ -429,7 +429,7 @@ export default function AudioEqualizer() {
               ToneCraft
             </h1>
             <p className="text-slate-300 text-lg font-light">Upload MP3 files and adjust the sound frequencies to enhance bass, vocals, and high notes in real-time</p>
-          </div>
+        </div>
 
         {/* File Upload */}
         <Card className="bg-slate-900/80 backdrop-blur-xl border-slate-700/50 shadow-2xl hover:shadow-purple-500/10 transition-all duration-500">
@@ -574,7 +574,7 @@ export default function AudioEqualizer() {
                 <Label className="text-white font-semibold text-sm flex justify-between items-center">
                   <span className="flex items-center gap-1">
                     <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full"></div>
-                    Mid (1kHz)
+                  Mid (1kHz)
                   </span>
                   <span className="text-blue-400 font-mono text-sm bg-slate-800/50 px-2 py-0.5 rounded">
                     {eqSettings.mid.toFixed(1)}dB
